@@ -48,10 +48,11 @@ def get_series():
         if isinstance(i, Series) == True:
             print(f'"{i.title} S{i.season:02d}E{i.episode:02d}"')
 
-def search(title):
-    
-
-
+def search():
+    choice1 = choice.upper()
+    for i in library_list:
+        if choice1 == i.title.upper():
+            print(f'"{i.title} S{i.season:02d}E{i.episode:02d}"')
 
 def generate_views():
     random_movie = random.choice(library_list)
@@ -63,8 +64,11 @@ def generate_views_times():
     for times in range(10):
         generate_views()
 
-def top_title():
-    pass
+def top_titles():
+    sort_by_number_of_plays = sorted(library_list, key=lambda movie: movie.number_of_plays, reverse=True)
+    for i in sort_by_number_of_plays[:best_titles]:
+        print(i.title)
+
 
 if __name__ == '__main__':
     movie = Movie(title='Nasz palneta', publishment=2019, grade='Document', number_of_plays=20)
@@ -81,13 +85,15 @@ if __name__ == '__main__':
     library_list.append(series2)
     library_list.append(series3)
 
-    choice = input('Podaj tytuł: ')
-    if ch
+    #choice = input('Podaj tytuł: ')
+    #search()
 
-    #print(library_list)
+    #best_titles = int(input('Ile chcesz wyświetli top tytułów: '))
+    #top_titles()
+
     #generate_views()
     #generate_views_times()
-    get_movies()
-    print()
-    get_series()
-    search()
+    #get_movies()
+    #get_series()
+    #search()
+

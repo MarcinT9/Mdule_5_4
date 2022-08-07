@@ -73,32 +73,29 @@ def generate_views_times():
         generate_views()
 
 def top_titles(value):
-    today = date.today()
-    today_format = today.strftime("%d.%m.%Y")
     print(f'Najpopularniejsze filmy i seriale dnia {today_format}:')
     sort_by_number_of_plays = sorted(library_list, key=lambda movie: movie.number_of_plays, reverse=True)
-    for i in sort_by_number_of_plays[:value]:
-        if not isinstance(i, Series):
-            print(f'{i.title} {i.publishment}')
-        else:
-            print(f"{i.title} S{i.season:02d}E{i.episode:02d}")
-
-movie = Movie(title='Nasz palneta', publishment=2019, grade='Document', number_of_plays=20)
-movie2 = Movie(title='BoJack Horseman', publishment=2014, grade='Drama', number_of_plays=10)
-movie3 = Movie(title='Stranger Things', publishment=2016, grade='Sci-Fi', number_of_plays=15)
-series = Series(title='Dom z papieru', publishment=2017, grade='Thriller', number_of_plays=100, episode=2, season=3)
-series2 = Series(title='The Crown', publishment=2016, grade='Drama', number_of_plays=20, episode=7, season=1)
-series3 = Series(title='The Queen s Gambit', publishment=2020, grade='Action', number_of_plays=50, episode=3, season=5)
-
-library_list.append(movie)
-library_list.append(movie2)
-library_list.append(movie3)
-library_list.append(series)
-library_list.append(series2)
-library_list.append(series3)
+    return sort_by_number_of_plays[:value]
 
 
 if __name__ == '__main__':
+    today = date.today()
+    today_format = today.strftime("%d.%m.%Y")
+
+    movie = Movie(title='Nasz palneta', publishment=2019, grade='Document', number_of_plays=20)
+    movie2 = Movie(title='BoJack Horseman', publishment=2014, grade='Drama', number_of_plays=10)
+    movie3 = Movie(title='Stranger Things', publishment=2016, grade='Sci-Fi', number_of_plays=15)
+    series = Series(title='Dom z papieru', publishment=2017, grade='Thriller', number_of_plays=100, episode=2, season=3)
+    series2 = Series(title='The Crown', publishment=2016, grade='Drama', number_of_plays=20, episode=7, season=1)
+    series3 = Series(title='The Queen s Gambit', publishment=2020, grade='Action', number_of_plays=50, episode=3, season=5)
+
+    library_list.append(movie)
+    library_list.append(movie2)
+    library_list.append(movie3)
+    library_list.append(series)
+    library_list.append(series2)
+    library_list.append(series3)
+    
     print('Biblioteka filmów:')
     print()
 
@@ -112,7 +109,7 @@ if __name__ == '__main__':
     generate_views()
     print()
 
-    top_titles(3)
+    print(top_titles(3))
     print()
 
 
@@ -120,5 +117,4 @@ if __name__ == '__main__':
     #generate_views_times()
     #print(get_movies())
     #print(get_series())
-   
 

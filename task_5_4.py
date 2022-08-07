@@ -1,4 +1,5 @@
 import random
+from datetime import date
 
 
 class Movie:
@@ -37,63 +38,87 @@ class Series(Movie):
 library_list = []
 
 def get_movies():
-    sort_by_title = sorted(library_list, key=lambda movie: movie.title)
-    for i in sort_by_title:
-        if not isinstance(i, Series) == True:
-            print(f'{i.title} ({i.publishment})')
+    list_movies= []
+    for i in library_list:
+        if not isinstance(i, Series):
+            list_movies.append(i.title)
+    sort_list_movies = sorted(list_movies)
+    return sort_list_movies
 
 def get_series():
-    sort_by_title = sorted(library_list, key=lambda series: series.title)
-    for i in sort_by_title:
-        if isinstance(i, Series) == True:
-            print(f'"{i.title} S{i.season:02d}E{i.episode:02d}"')
+    list_series= []
+    for i in library_list:
+        if isinstance(i, Series):
+            list_series.append(i.title)
+    sort_list_series = sorted(list_series)        
+    return sort_list_series
 
 def search():
+    choice = input('Podaj tytuł: ')
     choice1 = choice.upper()
     for i in library_list:
         if choice1 == i.title.upper():
-            print(f'"{i.title} S{i.season:02d}E{i.episode:02d}"')
+            if not isinstance(i, Series):
+                print(f'{i.title} {i.publishment}')
+            else:
+                print(f"{i.title} S{i.season:02d}E{i.episode:02d}")
 
 def generate_views():
     random_movie = random.choice(library_list)
     random_number = random.randrange(1, 100)
     random_movie.number_of_plays = random_movie.number_of_plays + random_number
-    print(f'{random_movie.title}, {random_movie.number_of_plays}')
 
 def generate_views_times():
     for times in range(10):
         generate_views()
 
-def top_titles():
+def top_titles(value):
+    today = date.today()
+    today_format = today.strftime("%d.%m.%Y")
+    print(f'Najpopularniejsze filmy i seriale dnia {today_format}:')
     sort_by_number_of_plays = sorted(library_list, key=lambda movie: movie.number_of_plays, reverse=True)
-    for i in sort_by_number_of_plays[:best_titles]:
-        print(i.title)
+    for i in sort_by_number_of_plays[:value]:
+        if not isinstance(i, Series):
+            print(f'{i.title} {i.publishment}')
+        else:
+            print(f"{i.title} S{i.season:02d}E{i.episode:02d}")
+
+movie = Movie(title='Nasz palneta', publishment=2019, grade='Document', number_of_plays=20)
+movie2 = Movie(title='BoJack Horseman', publishment=2014, grade='Drama', number_of_plays=10)
+movie3 = Movie(title='Stranger Things', publishment=2016, grade='Sci-Fi', number_of_plays=15)
+series = Series(title='Dom z papieru', publishment=2017, grade='Thriller', number_of_plays=100, episode=2, season=3)
+series2 = Series(title='The Crown', publishment=2016, grade='Drama', number_of_plays=20, episode=7, season=1)
+series3 = Series(title='The Queen s Gambit', publishment=2020, grade='Action', number_of_plays=50, episode=3, season=5)
+
+library_list.append(movie)
+library_list.append(movie2)
+library_list.append(movie3)
+library_list.append(series)
+library_list.append(series2)
+library_list.append(series3)
 
 
 if __name__ == '__main__':
-    movie = Movie(title='Nasz palneta', publishment=2019, grade='Document', number_of_plays=20)
-    movie2 = Movie(title='BoJack Horseman', publishment=2014, grade='Drama', number_of_plays=10)
-    movie3 = Movie(title='Stranger Tings', publishment=2016, grade='Sci-Fi', number_of_plays=15)
-    series = Series(title='Dom z papieru', publishment=2017, grade='Thriller', number_of_plays=100, episode=2, season=3)
-    series2 = Series(title='The Crown', publishment=2016, grade='Drama', number_of_plays=20, episode=7, season=1)
-    series3 = Series(title='The Queen s Gambit', publishment=2020, grade='Action', number_of_plays=50, episode=3, season=5)
+    print('Biblioteka filmów:')
+    print()
 
-    library_list.append(movie)
-    library_list.append(movie2)
-    library_list.append(movie3)
-    library_list.append(series)
-    library_list.append(series2)
-    library_list.append(series3)
+    for i in library_list:
+        if not isinstance(i, Series):
+            print(f'{i.title} {i.publishment}')
+        else:
+            print(f'{i.title} S{i.season:02d}E{i.episode:02d}')
 
-    #choice = input('Podaj tytuł: ')
+    print()
+    generate_views()
+    print()
+
+    top_titles(3)
+    print()
+
+
     #search()
-
-    #best_titles = int(input('Ile chcesz wyświetli top tytułów: '))
-    #top_titles()
-
-    #generate_views()
     #generate_views_times()
-    #get_movies()
-    #get_series()
-    #search()
+    #print(get_movies())
+    #print(get_series())
+   
 

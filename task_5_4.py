@@ -13,13 +13,10 @@ class Movie:
         self.number_of_plays += 1
 
     def __str__(self):
-        return f'{self.title} {(self.publishment)}'
+        return f'{self.title} {self.publishment}'
 
     def __repr__(self):
         return f'Movie(title={self.title}, publishment={self.publishment}, grade={self.grade}, number_of_plays={self.number_of_plays})'
-
-    def append_library_list(self):
-        library_list.append(self)
 
 
 class Series(Movie):
@@ -35,36 +32,30 @@ class Series(Movie):
         return f'Series(title={self.title}, publishment={self.publishment}, grade={self.grade}, number_of_plays={self.number_of_plays}, episode={self.episode:02d}, season={self.season:02d})'
 
 
-def get_movies():
-    list_movies= []
-    for i in library_list:
-        if type(i) == Movie:
-            list_movies.append(i.title)
-    sort_list_movies = sorted(list_movies) 
+def get_movies(library_list):
+    list_movies= [i for i in library_list if type(i) == Movie]
+    sort_list_movies = sorted(list_movies, key=lambda movie: movie.title) 
     return sort_list_movies
 
-def get_series():
-    list_series= []
-    for i in library_list:
-        if type(i) == Series:
-            list_series.append(i.title)
-    sort_list_series = sorted(list_series)        
+def get_series(library_list):
+    list_series= [i for i in library_list if type(i) == Series]
+    sort_list_series = sorted(list_series, key=lambda series: series.title)     
     return sort_list_series
 
-def search(list, title):
-    for i in list:
+def search(library_list, title):
+    for i in library_list:
         if title == i.title:
-            found_movie = title
+            found_movie = i
     return found_movie
       
-def generate_views():
+def generate_views(library_list):
     random_movie = random.choice(library_list)
     random_number = random.randrange(1, 100)
     random_movie.number_of_plays += random_number
 
-def generate_views_times():
+def generate_views_times(library_list):
     for times in range(10):
-        generate_views()
+        generate_views(library_list)
 
 def top_titles(value):
     print(f'Najpopularniejsze filmy i seriale dnia {today_format}:')
@@ -93,11 +84,12 @@ if __name__ == '__main__':
 
     print('Biblioteka filmów')
 
-    generate_views()
+    generate_views(library_list)
     print()
 
     print(top_titles(3))
     print()
+
 
 
 
